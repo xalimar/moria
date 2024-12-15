@@ -35,14 +35,13 @@ docker run -d \
     bubylou/moria:latest
 ```
 
-### Docker-Compose
+### Docker Compose
 
 ```yml
-version: '3.9'
 services:
   moria:
     container_name: moria
-    image: bubylou/moria:latest
+    image: ghcr.io/bubylou/moria:latest
     restart: unless-stopped
     environment:
       - UPDATE_ON_START=false
