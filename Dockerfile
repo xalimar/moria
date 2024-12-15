@@ -9,6 +9,7 @@ ENV APP_ID=3349480 \
 	CONFIG_DIR="/config/moria" \
 	DATA_DIR="/data/moria"
 
+COPY ./MoriaServerConfig.ini $CONFIG_DIR/MoriaServerConfig.ini
 RUN mkdir -p "$APP_DIR" "$CONFIG_DIR" "$DATA_DIR" \
 	&& steamcmd +login anonymous +quit \
 	&& xvfb-run winetricks -q vcrun2019
