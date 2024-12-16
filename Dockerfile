@@ -1,4 +1,4 @@
-FROM ghcr.io/bubylou/steamcmd:wine
+FROM ghcr.io/bubylou/steamcmd:v1.3.1-wine
 
 LABEL org.opencontainers.image.authors="Nicholas Malcolm"
 LABEL org.opencontainers.image.source="https://github.com/bubylou/moria-docker"
