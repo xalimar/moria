@@ -52,7 +52,7 @@ jobs:
         with:
           images: ghcr.io/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern={{version}},value=${{ inputs.version }}
+            type=semver,pattern=v{{version}},value=${{ inputs.version }}
             type=ref,event=branch,suffix=-{{ sha }}
             type=ref,event=pr
             type=raw,value=latest,enable={{is_default_branch}}
