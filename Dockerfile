@@ -24,7 +24,7 @@ ENV UPDATE_ON_START=false \
 	LISTEN_PORT=7777
 
 HEALTHCHECK --start-period=1m \
-	CMD pgrep "MoriaServer.exe" > /dev/null || exit 1
+	CMD pgrep "MoriaServer" > /dev/null || exit 1
 
 EXPOSE $GAME_PORT/udp $LISTEN_PORT/tcp
 ADD docker-entrypoint.sh /docker-entrypoint.sh
