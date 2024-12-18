@@ -11,7 +11,7 @@ variable "REPO" {
 }
 
 variable "TAG" {
-  default = "v0.1.4"
+  default = "v0.2.0"
 }
 
 function "tag" {
