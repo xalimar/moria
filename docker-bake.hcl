@@ -2,21 +2,12 @@ group "default" {
   targets = ["main"]
 }
 
-variable "REGISTRY" {
-  default = "ghcr.io"
-}
-
 variable "REPO" {
   default = "bubylou/moria"
 }
 
 variable "TAG" {
-  default = "v0.2.0"
-}
-
-function "tag" {
-  params = [tag]
-  result = "${REGISTRY}/${REPO}:${tag}"
+  default = "latest"
 }
 
 target "main" {
@@ -30,5 +21,6 @@ target "main" {
     "org.opencontainers.image.licenses" = "MIT"
   }
   platforms = ["linux/amd64"]
-  tags = [tag("latest"), tag("${TAG}")]
+  tags = ["ghcr.io/${REPO}:latest", "ghcr.io/${REPO}:${TAG}",
+          "docker.io/${REPO}:latest", "docker.io/${REPO}:${TAG}"]
 }
