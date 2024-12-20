@@ -1,5 +1,5 @@
 group "default" {
-  targets = ["main"]
+  targets = ["image"]
 }
 
 variable "REPO" {
@@ -10,7 +10,7 @@ variable "TAG" {
   default = "latest"
 }
 
-target "main" {
+target "image" {
   context = "."
   dockerfile = "Dockerfile"
   cache-from = ["type=gha"]
