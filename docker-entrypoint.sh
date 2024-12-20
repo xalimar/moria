@@ -20,5 +20,9 @@ if [[ ! -d $SAVE_DIR ]]; then
     ln -s "$DATA_DIR" $SAVE_DIR
 fi
 
+echo "Starting fake screen"
+rm -f /tmp/.X0-lock 2>&1
+Xvfb :0 -screen 0 1024x768x24 &
+
 echo "Starting Moria"
-xvfb-run wine "$APP_DIR/MoriaServer.exe"
+DISPLAY=:0.0 wine "$APP_DIR/MoriaServer.exe"
