@@ -1,6 +1,6 @@
 # Moria-Docker
 
-This is a Docker container used to a Return to Moria dedicated server.
+This container is used to run a [Return to Moria](https://store.steampowered.com/app/2933130) dedicated server.
 
 ## Environment-Variables
 
@@ -11,9 +11,10 @@ The following environment variables are made available to alter how the game ser
 | Variable           | Description                                                 | Default Values  | Allowed Values |
 |--------------------|-------------------------------------------------------------|-----------------|----------------|
 | UPDATE_ON_START    | Update the game server files on container start.            | false           | true/false     |
+| RESET_SEED         | Remove server seed which will reset the join code.          | false           | true/false     |
 | STEAM_USERNAME     | Reguires steam account with server key added.               | anonymous       | string         |
-| STEAM_PASSWORD     | Reguired in order to update on start.                       | ""              | string         |
-| STEAM_GUARD_CODE   | Reguired if Steam Guard is enabled.                         | ""              | string         |
+| STEAM_PASSWORD     | Reguired unless login is already cached.                    | ""              | string         |
+| STEAM_GUARD        | Reguired if Steam Guard is enabled.                         | ""              | string         |
 
 ### Server Settings
 
@@ -32,13 +33,12 @@ These variables modify some of the game configuration options and storage locati
 ### Docker Run
 
 ```bash
-docker run -d \
-    --name moria \
+docker run --name moria \
     -p 7777:7777/udp \
     -p 7777:7777/tcp \
     -v ./moria:/data/moria \
     --restart unless-stopped \
-    bubylou/moria:latest
+    ghcr.io/bubylou/moria:latest
 ```
 
 ### Docker Compose
@@ -51,6 +51,7 @@ services:
     restart: unless-stopped
     environment:
       - UPDATE_ON_START=false
+      - RESET_SEED=false
       - GAME_PORT=7777
       - LISTEN_PORT=7777
     ports:
