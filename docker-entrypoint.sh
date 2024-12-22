@@ -2,15 +2,23 @@
 set -e
 
 if [[ "$UPDATE_ON_START" == "true" ]]; then
-    steamcmd +force_install_dir "$APP_DIR" \
-        +login "$STEAM_USERNAME" "$STEAM_PASSWORD" "$STEAM_GUARD_CODE" \
+    steamcmd +force_install_dir "$APP_DIR" +@sSteamCmdForcePlatformType windows \
+        +login "$STEAM_USERNAME" "$STEAM_PASSWORD" "$STEAM_GUARD" \
         +app_update "$APP_ID" validate +quit
+fi
+
+if [[ "$RESET_SEED" == "true" ]]; then
+    rm -rf "$APP_DIR/Moria/Saved/Config/InviteSeed.cfg"
 fi
 
 SETTINGS_FILE="$APP_DIR/MoriaServerConfig.ini"
 if [[ ! -f $SETTINGS_FILE ]]; then
     echo "No configuration file found, linking default"
     ln -s "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
+
+    echo "Setting ports in configuration file"
+    sed -i "s/ListenPort=7777/ListenPort=$LISTEN_PORT/" $SETTINGS_FILE
+    sed -i "s/AdvertisePort=-1/AdvertisePort=$GAME_PORT/" $SETTINGS_FILE
 fi
 
 SAVE_DIR="$APP_DIR/Moria/Saved"

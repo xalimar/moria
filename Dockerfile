@@ -1,4 +1,4 @@
-FROM ghcr.io/bubylou/steamcmd:v1.3.2-wine
+FROM ghcr.io/bubylou/steamcmd:v1.3.3-wine
 
 LABEL org.opencontainers.image.authors="Nicholas Malcolm"
 LABEL org.opencontainers.image.source="https://github.com/bubylou/moria-docker"
@@ -17,9 +17,10 @@ RUN mkdir -p "$APP_DIR" "$CONFIG_DIR" "$DATA_DIR" \
 VOLUME [ "$APP_DIR", "$CONFIG_DIR", "$DATA_DIR" ]
 
 ENV UPDATE_ON_START=false \
+	RESET_SEED=false \
 	STEAM_USERNAME=anonymous \
 	STEAM_PASSWORD="" \
-	STEAM_GUARD_CODE="" \
+	STEAM_GUARD="" \
 	GAME_PORT=7777 \
 	LISTEN_PORT=7777
 
