@@ -1,4 +1,4 @@
-FROM ghcr.io/bubylou/steamcmd:v1.3.3-wine
+FROM ghcr.io/bubylou/steamcmd:v1.3.4-wine
 
 LABEL org.opencontainers.image.authors="Nicholas Malcolm"
 LABEL org.opencontainers.image.source="https://github.com/bubylou/moria-docker"
@@ -24,7 +24,7 @@ ENV UPDATE_ON_START=false \
 	GAME_PORT=7777 \
 	LISTEN_PORT=7777
 
-HEALTHCHECK --start-period=1m \
+HEALTHCHECK --interval=30s --start-period=1m --timeout=10s \
 	CMD pgrep "MoriaServer" > /dev/null || exit 1
 
 EXPOSE $GAME_PORT/udp $LISTEN_PORT/tcp
