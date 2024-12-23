@@ -1,5 +1,5 @@
 group "default" {
-  targets = ["image"]
+  targets = ["image-release"]
 }
 
 variable "REPO" {
@@ -10,7 +10,18 @@ variable "TAG" {
   default = "latest"
 }
 
-target "image" {
+target "image-dev" {
+  inherits = ["image-release"]
+  cache-from = ["type=registry,ref=ghcr.io/bubylou/moria"]
+  cache-to = ["type=inline"]
+  env = {
+    "STEAMCMD_VERSION" = "latest"
+    "UPDATE_ON_START" = "false"
+    "RESET_SEED" = "true"
+  }
+}
+
+target "image-release" {
   context = "."
   dockerfile = "Dockerfile"
   cache-from = ["type=gha"]

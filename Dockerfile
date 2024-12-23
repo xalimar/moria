@@ -1,4 +1,5 @@
-FROM ghcr.io/bubylou/steamcmd:v1.3.5-wine
+ARG STEAMCMD_VERSION=v1.3.5-wine
+FROM ghcr.io/bubylou/steamcmd:$STEAMCMD_VERSION
 
 LABEL org.opencontainers.image.authors="Nicholas Malcolm"
 LABEL org.opencontainers.image.source="https://github.com/bubylou/moria-docker"
