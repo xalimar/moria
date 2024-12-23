@@ -1,1 +1,4 @@
-moria
+moria-app
+moria-config
+moria-data
+docker-compose.yml
