@@ -1,4 +1,4 @@
-ARG STEAMCMD_VERSION=v1.3.6-wine
+ARG STEAMCMD_VERSION=v1.4.0-wine
 FROM ghcr.io/bubylou/steamcmd:$STEAMCMD_VERSION
 
 LABEL org.opencontainers.image.authors="Nicholas Malcolm"
@@ -12,11 +12,13 @@ ENV APP_ID=3349480 \
 	UPDATE_ON_START=false \
 	RESET_SEED=false \
 	STEAM_USERNAME=anonymous \
-	STEAM_PASSWORD="" \
-	STEAM_GUARD="" \
 	GAME_PORT=7777 \
-	LISTEN_PORT=7777
+	LISTEN_PORT=7777 \
+	USER=steam \
+	UID=1000 \
+	GID=1000
 
+USER $USER
 COPY ./MoriaServerConfig.ini $CONFIG_DIR/MoriaServerConfig.ini
 
 # Update SteamCMD and install wine dependencies
