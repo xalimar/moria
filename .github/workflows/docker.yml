@@ -46,5 +46,6 @@ jobs:
         uses: docker/bake-action@v5.11.0
         with:
           push: ${{ github.event_name != 'pull_request' }}
+          targets: release-all
         env:
           TAG: ${{ github.ref_name }}

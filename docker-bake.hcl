@@ -1,5 +1,9 @@
 group "default" {
-  targets = ["image-release"]
+  targets = ["build"]
+}
+
+group "release-all" {
+  targets = ["release"]
 }
 
 variable "REPO" {
@@ -9,29 +13,29 @@ variable "REPO" {
 variable "TAG" {
   default = "latest"
 }
-
-target "image-dev" {
-  inherits = ["image-release"]
-  cache-from = ["type=registry,ref=ghcr.io/bubylou/moria"]
+target "build" {
+  context = "."
+  dockerfile = "Dockerfile"
+  cache-from = ["type=registry,ref=ghcr.io/${REPO}"]
   cache-to = ["type=inline"]
   env = {
     "STEAMCMD_VERSION" = "latest"
     "UPDATE_ON_START" = "false"
     "RESET_SEED" = "true"
   }
+  tags = ["ghcr.io/${REPO}:latest", "ghcr.io/${REPO}:${TAG}",
+          "docker.io/${REPO}:latest", "docker.io/${REPO}:${TAG}"]
 }
 
-target "image-release" {
+target "release" {
+  inherits = ["build"]
   context = "."
   dockerfile = "Dockerfile"
   cache-from = ["type=gha"]
   cache-to = ["type=gha,mode=max"]
-  labels = {
-    "org.opencontainers.image.source" = "https://github.com/bubylou/moria-docker"
-    "org.opencontainers.image.authors" = "Nicholas Malcolm <bubylou@pm.me>"
-    "org.opencontainers.image.licenses" = "MIT"
-  }
+  attest = [
+    "type=provenance,mode=max",
+    "type=sbom"
+  ]
   platforms = ["linux/amd64"]
-  tags = ["ghcr.io/${REPO}:latest", "ghcr.io/${REPO}:${TAG}",
-          "docker.io/${REPO}:latest", "docker.io/${REPO}:${TAG}"]
 }
