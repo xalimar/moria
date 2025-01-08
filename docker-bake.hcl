@@ -32,8 +32,9 @@ target "build-dev" {
   }
 }
 
+target "docker-metadata-action" {}
 target "release" {
-  inherits = ["build"]
+  inherits = ["build", "docker-metadata-action"]
   cache-from = ["type=gha"]
   cache-to = ["type=gha,mode=max"]
   attest = [
