@@ -37,8 +37,7 @@ target "release" {
   cache-from = ["type=gha"]
   cache-to = ["type=gha,mode=max"]
   attest = [
-    "type=provenance,mode=max",
-    "type=sbom"
+    "type=provenance,mode=max"
   ]
   platforms = ["linux/amd64"]
 }
