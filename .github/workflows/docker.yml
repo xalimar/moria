@@ -2,6 +2,7 @@ name: Docker
 
 on:
   push:
+    branches: [ "main" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
@@ -21,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v3.7.1
+        uses: docker/setup-buildx-action@v3.8.0
 
       # Login against a Github registry except on PR
       - name: Log into github container registry
@@ -47,5 +48,3 @@ jobs:
         with:
           push: ${{ github.event_name != 'pull_request' }}
           targets: release-all
-        env:
-          TAG: ${{ github.ref_name }}
