@@ -33,7 +33,7 @@ COPY ./MoriaServerConfig.ini ${CONFIG_DIR}/MoriaServerConfig.ini
 # Update SteamCMD and setup wine
 RUN mkdir -p "${APP_DIR}" "${CONFIG_DIR}" "${DATA_DIR}" \
 	&& steamcmd +login anonymous +quit \
-	&& xvfb-run winetricks -q vcrun2019
+	&& xvfb-run winetricks -q vcrun2022
 
 VOLUME [ "${APP_DIR}", "${CONFIG_DIR}", "${DATA_DIR}" ]
 
