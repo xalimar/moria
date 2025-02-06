@@ -14,19 +14,18 @@ build:
     ENV UPDATE_ON_START=false
     ENV RESET_SEED=false
     ENV STEAM_USERNAME=anonymous
-    ENV GAME_PORT=7777
+    ENV LISTEN_PORT=7777
 
-    COPY ./MoriaServerConfig.ini $CONFIG_DIR/MoriaServerConfig.ini
+    COPY ./MoriaServerConfig.ini "$CONFIG_DIR/MoriaServerConfig.ini"
     RUN mkdir -p "$APP_DIR" "$CONFIG_DIR" "$DATA_DIR" \
         && steamcmd +login anonymous +quit \
         && xvfb-run winetricks -q vcrun2019
 
-    VOLUME [ $APP_DIR, $CONFIG_DIR, $DATA_DIR ]
+    VOLUME [ "$APP_DIR", "$CONFIG_DIR", "$DATA_DIR" ]
 
     COPY entrypoint.sh /entrypoint.sh
     ENTRYPOINT ["/entrypoint.sh"]
 
-    ARG TAG='latest'
     SAVE IMAGE --push docker.io/bubylou/moria:$tag docker.io/bubylou/moria:latest
     SAVE IMAGE --push ghcr.io/bubylou/moria:$tag ghcr.io/bubylou/moria:latest
 
