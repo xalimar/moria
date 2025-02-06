@@ -1,4 +1,4 @@
-# Moria-Docker
+# Moria
 
 This container is used to run a [Return to Moria](https://store.steampowered.com/app/2933130) dedicated server.
 
@@ -30,10 +30,10 @@ These variables modify some of the game configuration options and storage locati
 
 ## Examples
 
-### Docker Run
+### Podman Run
 
 ```bash
-docker run --name moria \
+podman run --name moria \
     -p 7777:7777/udp \
     -p 7777:7777/tcp \
     -v ./moria:/data/moria \
@@ -41,7 +41,7 @@ docker run --name moria \
     ghcr.io/bubylou/moria:latest
 ```
 
-### Docker Compose
+### Podman Compose
 
 ```yml
 services:

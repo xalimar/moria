@@ -1,6 +1,6 @@
 VERSION 0.8
 FROM ghcr.io/bubylou/steamcmd:v1.5.1-wine
-LABEL org.opencontainers.image.source="https://github.com/bubylou/moria-docker"
+LABEL org.opencontainers.image.source="https://github.com/bubylou/moria"
 LABEL org.opencontainers.image.authors="Nicholas Malcolm <bubylou@pm.me>"
 LABEL org.opencontainers.image.licenses="MIT"
 ARG --global --required tag
@@ -23,8 +23,8 @@ build:
 
     VOLUME [ $APP_DIR, $CONFIG_DIR, $DATA_DIR ]
 
-    COPY docker-entrypoint.sh /docker-entrypoint.sh
-    ENTRYPOINT ["/docker-entrypoint.sh"]
+    COPY entrypoint.sh /entrypoint.sh
+    ENTRYPOINT ["/entrypoint.sh"]
 
     ARG TAG='latest'
     SAVE IMAGE --push docker.io/bubylou/moria:$tag docker.io/bubylou/moria:latest
