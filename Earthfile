@@ -1,0 +1,34 @@
+VERSION 0.8
+FROM ghcr.io/bubylou/steamcmd:v1.5.1-wine
+LABEL org.opencontainers.image.source="https://github.com/bubylou/moria-docker"
+LABEL org.opencontainers.image.authors="Nicholas Malcolm <bubylou@pm.me>"
+LABEL org.opencontainers.image.licenses="MIT"
+ARG --global --required tag
+
+build:
+    ENV APP_ID=3349480
+    ENV APP_NAME=moria
+    ENV APP_DIR="/app/moria"
+    ENV CONFIG_DIR="/config/moria"
+    ENV DATA_DIR="/data/moria"
+    ENV UPDATE_ON_START=false
+    ENV RESET_SEED=false
+    ENV STEAM_USERNAME=anonymous
+    ENV GAME_PORT=7777
+
+    COPY ./MoriaServerConfig.ini $CONFIG_DIR/MoriaServerConfig.ini
+    RUN mkdir -p "$APP_DIR" "$CONFIG_DIR" "$DATA_DIR" \
+        && steamcmd +login anonymous +quit \
+        && xvfb-run winetricks -q vcrun2019
+
+    VOLUME [ $APP_DIR, $CONFIG_DIR, $DATA_DIR ]
+
+    COPY docker-entrypoint.sh /docker-entrypoint.sh
+    ENTRYPOINT ["/docker-entrypoint.sh"]
+
+    ARG TAG='latest'
+    SAVE IMAGE --push docker.io/bubylou/moria:$tag docker.io/bubylou/moria:latest
+    SAVE IMAGE --push ghcr.io/bubylou/moria:$tag ghcr.io/bubylou/moria:latest
+
+all:
+    BUILD +build
