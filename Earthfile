@@ -30,5 +30,16 @@ build:
     SAVE IMAGE --push docker.io/bubylou/moria:$tag docker.io/bubylou/moria:latest
     SAVE IMAGE --push ghcr.io/bubylou/moria:$tag ghcr.io/bubylou/moria:latest
 
+full:
+    FROM +build
+    RUN steamcmd +force_install_dir "$APP_DIR" \
+        +@sSteamCmdForcePlatformType windows \
+        +login "$STEAM_USERNAME" "$STEAM_PASSWORD" "$STEAM_GUARD" \
+        +app_update "$APP_ID" validate +quit
+
+    SAVE IMAGE --push docker.io/bubylou/moria:$tag-full docker.io/bubylou/moria:latest-full
+    SAVE IMAGE --push ghcr.io/bubylou/moria:$tag-full ghcr.io/bubylou/moria:latest-full
+
 all:
     BUILD +build
+    BUILD +full
