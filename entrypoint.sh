@@ -18,6 +18,10 @@ if [[ ! -f $SETTINGS_FILE ]]; then
 
     echo "Setting ports in configuration file"
     sed -i "s/ListenPort=7777/ListenPort=$LISTEN_PORT/" $SETTINGS_FILE
+else
+    echo "Existing configuration file found, moving to default location"
+    mv $SETTINGS_FILE "$CONFIG_DIR/MoriaServerConfig.ini"
+    ln -s "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
 fi
 
 SAVE_DIR="$APP_DIR/Moria/Saved"
