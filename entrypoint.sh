@@ -29,6 +29,10 @@ if [[ ! -d $SAVE_DIR ]]; then
     echo "No save file found, linking directory"
     mkdir -p "$APP_DIR/Moria"
     ln -s "$DATA_DIR" $SAVE_DIR
+else
+    echo "No save file found, linking directory"
+    mv "$APP_DIR/Moria" "$DATA_DIR"
+    ln -s "$DATA_DIR" $SAVE_DIR
 fi
 
 echo "Starting fake screen"
