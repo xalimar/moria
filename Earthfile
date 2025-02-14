@@ -3,6 +3,7 @@ FROM ghcr.io/bubylou/steamcmd:v1.5.1-wine
 LABEL org.opencontainers.image.source="https://github.com/bubylou/moria"
 LABEL org.opencontainers.image.authors="Nicholas Malcolm <bubylou@pm.me>"
 LABEL org.opencontainers.image.licenses="MIT"
+ARG --global name=bubylou/moria
 ARG --global --required tag
 
 build:
@@ -11,7 +12,7 @@ build:
     ENV APP_DIR="/app/moria"
     ENV CONFIG_DIR="/config/moria"
     ENV DATA_DIR="/data/moria"
-    ENV UPDATE_ON_START=false
+    ENV UPDATE_ON_START=true
     ENV RESET_SEED=false
     ENV STEAM_USERNAME=anonymous
     ENV LISTEN_PORT=7777
@@ -26,8 +27,10 @@ build:
     COPY entrypoint.sh /entrypoint.sh
     ENTRYPOINT ["/entrypoint.sh"]
 
-    SAVE IMAGE --push docker.io/bubylou/moria:$tag docker.io/bubylou/moria:latest
-    SAVE IMAGE --push ghcr.io/bubylou/moria:$tag ghcr.io/bubylou/moria:latest
+    SAVE IMAGE --cache-from=docker.io/$name:main --push \
+        docker.io/$name:$tag docker.io/$name:latest
+    SAVE IMAGE --cache-from=ghcr.io/$name:main --push \
+        ghcr.io/$name:$tag ghcr.io/$name:latest
 
 full:
     FROM +build
@@ -36,8 +39,10 @@ full:
         +login "$STEAM_USERNAME" "$STEAM_PASSWORD" "$STEAM_GUARD" \
         +app_update "$APP_ID" validate +quit
 
-    SAVE IMAGE --push docker.io/bubylou/moria:$tag-full docker.io/bubylou/moria:latest-full
-    SAVE IMAGE --push ghcr.io/bubylou/moria:$tag-full ghcr.io/bubylou/moria:latest-full
+    SAVE IMAGE --cache-from=docker.io/$name:main-full --push \
+        docker.io/$name:$tag-full docker.io/$name:latest-full
+    SAVE IMAGE --cache-from=ghcr.io/$name:main-full --push \
+        ghcr.io/$name:$tag-full ghcr.io/$name:latest-full
 
 all:
     BUILD +build
