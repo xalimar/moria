@@ -8,36 +8,31 @@ if [[ "$UPDATE_ON_START" == "true" ]]; then
 fi
 
 if [[ "$RESET_SEED" == "true" ]]; then
-    rm -rf "$APP_DIR/Moria/Saved/Config/InviteSeed.cfg"
+    rm -f "$APP_DIR/Moria/Saved/Config/InviteSeed.cfg"
 fi
 
 SETTINGS_FILE="$APP_DIR/MoriaServerConfig.ini"
-if [[ ! -f $SETTINGS_FILE ]]; then
-    echo "No configuration file found, linking default"
-    ln -s "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
-
-    echo "Setting ports in configuration file"
-    sed -i "s/ListenPort=7777/ListenPort=$LISTEN_PORT/" $SETTINGS_FILE
-else
-    echo "Existing configuration file found, moving to default location"
+if [[ -f $SETTINGS_FILE ]]; then
+    echo "Existing configuration file found, moving to $CONFIG_DIR"
     mv $SETTINGS_FILE "$CONFIG_DIR/MoriaServerConfig.ini"
-    ln -s "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
 fi
 
 SAVE_DIR="$APP_DIR/Moria/Saved"
-if [[ ! -d $SAVE_DIR ]]; then
-    echo "No save file found, linking directory"
-    mkdir -p "$APP_DIR/Moria"
-    ln -s "$DATA_DIR" $SAVE_DIR
-else
-    echo "No save file found, linking directory"
+if [[ -d $SAVE_DIR ]]; then
+    echo "Moving existing save to $DATA_DIR"
     mv "$APP_DIR/Moria" "$DATA_DIR"
-    ln -s "$DATA_DIR" $SAVE_DIR
+else
+    echo "No existing save file found"
+    mkdir -p "$APP_DIR/Moria"
 fi
+
+ln -s "$DATA_DIR" $SAVE_DIR
+ln -s "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
+sed -i "s/ListenPort=7777/ListenPort=$LISTEN_PORT/" $SETTINGS_FILE
 
 echo "Starting fake screen"
 rm -f /tmp/.X0-lock 2>&1
-Xvfb :0 -screen 0 1024x768x24 &
+Xvfb :0 -screen 0 1024x768x24 -nolisten tcp &
 
 echo "Starting Moria"
 DISPLAY=:0.0 wine "$APP_DIR/MoriaServer.exe"
