@@ -35,4 +35,4 @@ rm -f /tmp/.X0-lock 2>&1
 Xvfb :0 -screen 0 1024x768x24 -nolisten tcp &
 
 echo "Starting Moria"
-DISPLAY=:0.0 wine "$APP_DIR/MoriaServer.exe"
+DISPLAY=:0.0 wine "$APP_DIR/Moria/Binaries/Win64/MoriaServer-Win64-Shipping.exe"
