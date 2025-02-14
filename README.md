@@ -1,7 +1,7 @@
 # Moria
 
 This container is used to run a [Return to Moria](https://store.steampowered.com/app/2933130) dedicated server.
-An additional container tag "-full" is available which already has the dedicated server files downloaded at the cost increases the intial container storage size.
+An additional container tag "-full" is available which already has the dedicated server files downloaded at the cost increases the intial container download size.
 
 ## Environment-Variables
 
@@ -11,11 +11,8 @@ The following environment variables are made available to alter how the game ser
 
 | Variable           | Description                                                 | Default Values  | Allowed Values |
 |--------------------|-------------------------------------------------------------|-----------------|----------------|
-| UPDATE_ON_START    | Update the game server files on container start.            | false           | true/false     |
+| UPDATE_ON_START    | Update the game server files on container start.            | true            | true/false     |
 | RESET_SEED         | Remove server seed file which will reset the join code.     | false           | true/false     |
-| STEAM_USERNAME     | Steam account used to download dedicated game server files. | anonymous       | string         |
-| STEAM_PASSWORD     | Steam account password.                                     | ""              | string         |
-| STEAM_GUARD        | Steam Guard code if enabled on account.                     | ""              | string         |
 
 ### Server Settings
 
@@ -49,7 +46,7 @@ services:
     image: ghcr.io/bubylou/moria:latest
     restart: unless-stopped
     environment:
-      - UPDATE_ON_START=false
+      - UPDATE_ON_START=true
       - RESET_SEED=false
       - LISTEN_PORT=7777
     ports:

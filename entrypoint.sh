@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [[ "$UPDATE_ON_START" == "true" ]]; then
+if [[ "$UPDATE_ON_START" == "true" || ! -d "$APP_DIR/Moria/Binaries" ]]; then
     steamcmd +force_install_dir "$APP_DIR" +@sSteamCmdForcePlatformType windows \
         +login "$STEAM_USERNAME" "$STEAM_PASSWORD" "$STEAM_GUARD" \
         +app_update "$APP_ID" validate +quit
