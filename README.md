@@ -18,12 +18,34 @@ The following environment variables are made available to alter how the game ser
 
 These variables modify some of the game configuration options and storage locations.
 
-| Variable           | Description                                                 | Default Values  | Allowed Values |
-|--------------------|-------------------------------------------------------------|-----------------|----------------|
-| APP_DIR            | Application files directory                                 | /app/moria      | directory      |
-| CONFIG_DIR         | Configuration file directory                                | /config/moria   | directory      |
-| DATA_DIR           | Save data directory                                         | /data/moria     | directory      |
-| LISTEN_PORT        | Port number for listener.                                   | 7777            | 1024-65535     |
+| Variable                       | Description                                                 | Default Values   | Allowed Values  |
+|--------------------------------|-------------------------------------------------------------|------------------|-----------------|
+| APP_DIR                        | Application files directory                                 | /app/moria       | directory       |
+| CONFIG_DIR                     | Configuration file directory                                | /config/moria    | directory       |
+| DATA_DIR                       | Save data directory                                         | /data/moria      | directory       |
+| LISTEN_PORT                    | Port number for listener.                                   | 7777             | 1024-65535      |
+| LISTEN_ADDRESS                 | Server interface for listener                               | ""               |                 |
+| SERVER_PASSWORD                | Password required to connect                                | ""               |                 |
+| SERVER_NAME                    | Server Name                                                 | Dedicated Server |                 |
+| OPTIONAL_WORLD_FILENAME        | Select which save file to load                              | ""               |                 |
+| WORLD_TYPE                     | Campaign or sandbox mode                                    | campaign         | campaign/sanbox |
+| WORLD_SEED                     | World seed                                                  | random           |                 |
+| SERVER_FPS                     | Server FPS, reduce to lower CPU                             | 60               |                 |
+| LOADED_AREA_LIMIT              | Maximum areas to keep in memory. Affects performance        | 12               | 4-32            |
+| CONSOLE_ENABLED                | Set for the server to launch the console window             | false            |                 |
+| DIFFICULTY_PRESET              |                                                             | normal           |                 |
+| COMBAT_DIFFICULTY              |                                                             | default          |                 |
+| ENEMY_AGGRESSION               |                                                             | high             |                 |
+| SURVIVAL_DIFFICULTY            |                                                             | default          |                 |
+| MINING_DROPS                   |                                                             | default          |                 |
+| WORLD_DROPS                    |                                                             | default          |                 |
+| HORDE_FREQUENCY                |                                                             | default          |                 |
+| SIEGE_FREQUENCY                |                                                             | default          |                 |
+| PATROL_FREQUENCY               |                                                             | default          |                 |
+| ADVERTISE_ADDRESS              |                                                             | auto             |                 |
+| ADVERTISE_PORT                 |                                                             | -1               |                 |
+| INITIAL_CONNECTION_RETRY_TIME  |                                                             | 120              |                 |
+| AFTER_DISCONNECTION_RETRY_TIME |                                                             | 600              |                 |
 
 ## Examples
 
