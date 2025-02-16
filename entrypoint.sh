@@ -26,9 +26,9 @@ else
     mkdir -p "$APP_DIR/Moria"
 fi
 
+envsubst < /MoriaServerConfig.ini.tmpl > "$CONFIG_DIR/MoriaServerConfig.ini"
 ln -s "$DATA_DIR" $SAVE_DIR
 ln -s "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
-sed -i "s/ListenPort=7777/ListenPort=$LISTEN_PORT/" $SETTINGS_FILE
 
 echo "Starting fake screen"
 rm -f /tmp/.X0-lock 2>&1

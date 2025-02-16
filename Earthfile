@@ -16,8 +16,30 @@ build:
     ENV RESET_SEED=false
     ENV STEAM_USERNAME=anonymous
     ENV LISTEN_PORT=7777
+    ENV LISTEN_ADDRESS=""
+    ENV SERVER_PASSWORD=""
+    ENV SERVER_NAME="Dedicated Server"
+    ENV OPTIONAL_WORLD_FILENAME=""
+    ENV WORLD_TYPE="campaign"
+    ENV WORLD_SEED="random"
+    ENV SERVER_FPS="60"
+    ENV LOADED_AREA_LIMIT="12"
+    ENV CONSOLE_ENABLED="false"
+    ENV DIFFICULTY_PRESET="normal"
+    ENV COMBAT_DIFFICULTY="default"
+    ENV ENEMY_AGGRESSION="high"
+    ENV SURVIVAL_DIFFICULTY="default"
+    ENV MINING_DROPS="default"
+    ENV WORLD_DROPS="default"
+    ENV HORDE_FREQUENCY="default"
+    ENV SIEGE_FREQUENCY="default"
+    ENV PATROL_FREQUENCY="default"
+    ENV ADVERTISE_ADDRESS="auto"
+    ENV ADVERTISE_PORT="-1"
+    ENV INITIAL_CONNECTION_RETRY_TIME="120"
+    ENV AFTER_DISCONNECTION_RETRY_TIME="600"
 
-    COPY ./MoriaServerConfig.ini "$CONFIG_DIR/MoriaServerConfig.ini"
+    COPY ./MoriaServerConfig.ini.tmpl /MoriaServerConfig.ini.tmpl
     RUN mkdir -p "$APP_DIR" "$CONFIG_DIR" "$DATA_DIR" \
         && steamcmd +login anonymous +quit \
         && xvfb-run winetricks -q vcrun2022
@@ -31,6 +53,7 @@ build:
         docker.io/$name:$tag docker.io/$name:latest
     SAVE IMAGE --cache-from=ghcr.io/$name:main --push \
         ghcr.io/$name:$tag ghcr.io/$name:latest
+    SAVE IMAGE ghcr.io/bubylou/moria:latest
 
 full:
     FROM +build
