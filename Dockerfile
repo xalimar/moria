@@ -1,7 +1,7 @@
 FROM ghcr.io/bubylou/steamcmd:v1.5.1-wine
 
-LABEL org.opencontainers.image.source="https://github.com/bubylou/moria"
-LABEL org.opencontainers.image.authors="Nicholas Malcolm <bubylou@pm.me>"
+LABEL org.opencontainers.image.source="https://github.com/xalimar/moria"
+LABEL org.opencontainers.image.authors="xalimar <xalimar@gmail.com>"
 LABEL org.opencontainers.image.licenses="MIT"
 
 ENV APP_ID=3349480
