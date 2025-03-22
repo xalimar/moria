@@ -32,10 +32,11 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build . --tag ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }} --tag ghcr.io/${{ env.IMAGE_NAME }}:latest
+          docker build . --tag ghcr.io/${{ env.IMAGE_NAME }}:latest
 
       - name: Push Docker Image
         if: github.event_name != 'pull_request'
         run: |
+          docker tag ghcr.io/${{ env.IMAGE_NAME }}:latest ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
           docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
           docker push ghcr.io/${{ env.IMAGE_NAME }}:latest
