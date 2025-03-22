@@ -1,0 +1,20 @@
+services:
+  moria:
+    container_name: moria
+    image: ghcr.io/bubylou/moria:latest
+    restart: unless-stopped
+    environment:
+      - UPDATE_ON_START=true
+      - LISTEN_PORT=7777
+      - SERVER_NAME=myserver
+      - SERVER_PASSWORD=mypassword
+    ports:
+      - 7777:7777/udp
+    volumes:
+      - moria-app:/app/moria # game server files
+      - moria-config:/config/moria # moria config files
+      - moria-data:/data/moria # game/world save
+volumes:
+  moria-app:
+  moria-config:
+  moria-data:

@@ -2,14 +2,14 @@ name: Container Build
 
 on:
   push:
-    branches: [ "main" ]
+    # branches: [ "main" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "main" ]
 
 env:
-  IMAGE_NAME: bubylou/moria
+  IMAGE_NAME: xalimar/moria
 
 jobs:
   build:
@@ -21,33 +21,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install earthly
-        uses: earthly/actions-setup@v1
-        with:
-          version: v0.8.0
-
       # Login against a Github registry except on PR
       - name: Log into github container registry
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3.3.0
+        uses: docker/login-action@v3.4.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Login for Docker registry
-      - name: Log into docker container registry
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3.3.0
-        with:
-          registry: docker.io
-          username: ${{ vars.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Build Docker Image
+        run: |
+          docker build . --tag ghcr.io/${{ env.IMAGE_NAME }}:latest
 
-      # Build and push container image with Earthly (don't push on PR)
-      - name: Build and push
-        env:
-          PLATFORMS: "--platform=linux/amd64"
-          PUSH: ${{ github.event_name != 'pull_request' && '--push' || '' }}
-          TAG: ${{ github.ref_name }}
-        run: earthly --ci $PLATFORMS $PUSH +all --tag $TAG
+      - name: Push Docker Image
+        if: github.event_name != 'pull_request'
+        run: |
+          docker tag ghcr.io/${{ env.IMAGE_NAME }}:latest ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+          docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+          docker push ghcr.io/${{ env.IMAGE_NAME }}:latest
