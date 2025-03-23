@@ -1,0 +1,37 @@
+image:
+  repository: ghcr.io/xalimar/moria
+  tag: latest
+
+config:
+  serverName: "Dedicated Server"
+  listenPort: 7777
+  # Use an existing secret to pull server password from. Must have a serverPassword key.
+  serverPasswordExistingSecretName: ""
+  # If existing secret is not provided, set the server password here
+  # If no password is set, a random one will be generated
+  serverPassword: ""
+  updateOnStart: true
+  worldSeed: "random"
+  resetSeed: false
+  serverFps: "60"
+  loadedAreaLimit: "12"
+  consoleEnabled: "false"
+  difficultyPreset: "normal"
+
+resources:
+  requests:
+    memory: 12G
+    cpu: 4.0
+
+service:
+  type: Nodeport
+  annotations: {}
+
+volumes:
+  appPVC:
+    size: 2GiB
+  configPVC:
+    size: 10MiB
+  dataPVC:
+    size: 20GiB
+  storageClassName: ""

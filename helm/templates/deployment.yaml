@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Chart.Name }}"
+  labels:
+    app: "{{ .Chart.Name }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "{{ .Chart.Name }}"
+      release: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Chart.Name }}"
+        release: "{{ .Release.Name }}"
+    spec:
+      securityContext:
+        runAsUser: 10000
+        runAsGroup: 10000
+        fsGroup: 10000
+      containers:
+      - name: "{{ .Chart.Name }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: Always
+        resources:
+        {{ toYaml .Values.resources | indent 10 }}
+        env:
+        - name: SERVER_NAME
+          value: {{ .values.config.serverName | squote }}
+        - name: LISTEN_PORT
+          value: {{ .values.config.listenPort | squote }}
+        - name: SERVER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "moria.passwordSecretName" . }}
+              key: serverPassword
+        - name: UPDATE_ON_START
+          value: {{ .values.config.updateOnStart | squote }}
+        - name: RESET_SEED
+          value: {{ .values.config.resetSeed | squote }}
+        - name: WORLD_SEED
+          value: {{ .values.config.worldSeed | squote }}
+        - name: SERVER_FPS
+          value: {{ .values.config.serverFps | squote }}
+        - name: LOADED_AREA_LIMIT
+          value: {{ .values.config.loadedAreaLimit | squote }}
+        - name: CONSOLE_ENABLED
+          value: {{ .values.config.consoleEnabled | squote }}
+        - name: DIFFICULTY_PRESET
+          value: {{ .values.config.difficultyPreset | squote }}
+        ports:
+        - name: game-port
+          containerPort: {{ .Values.config.listenPort | int }}
+          protocol: UDP
+        volumeMounts:
+        - name: moria-app
+          mountPath: /app/moria
+        - name: moria-config
+          mountPath: /config/moria
+        - name: moria-data
+          mountPath: /data/moria
+        securityContext:
+          allowPrivilegeEscalation: false
+      volumes:
+      - name: app
+        persistentVolumeClaim:
+          claimName: "{{ .Chart.Name }}-app"
+      - name: config
+        persistentVolumeClaim:
+          claimName: "{{ .Chart.Name }}-config"
+      - name: data
+        persistentVolumeClaim:
+          claimName: "{{ .Chart.Name }}-data"
+      terminationGracePeriodSeconds: 90
