@@ -2,6 +2,15 @@ apiVersion: v1
 entries:
   moria-dedicated:
   - apiVersion: v2
+    created: "2025-03-24T07:44:33.225041159Z"
+    description: Return to Moria dedicated server
+    digest: 57005d732f269981285c4c3ef9e29b75e8a9c265aa60c7a1744b773d79ae8ed8
+    home: https://github.com/xalimar/moria
+    name: moria-dedicated
+    urls:
+    - https://github.com/xalimar/moria/releases/download/moria-dedicated-0.1.8/moria-dedicated-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
     created: "2025-03-24T07:41:57.08225107Z"
     description: Return to Moria dedicated server
     digest: dca9c2bab5fcc8a8275b35e1919af24cdeb9ab77a05d330172261b6b1aef78f9
@@ -73,4 +82,4 @@ entries:
     urls:
     - https://github.com/xalimar/moria/releases/download/moria-dedicated-0.1.0/moria-dedicated-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-24T07:41:57.082286046Z"
+generated: "2025-03-24T07:44:33.225083578Z"
