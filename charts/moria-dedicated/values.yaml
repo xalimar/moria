@@ -24,7 +24,7 @@ resources:
     cpu: 4.0
 
 service:
-  type: Nodeport
+  type: NodePort
   annotations: {}
 
 volumes:
