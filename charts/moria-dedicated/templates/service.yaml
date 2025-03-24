@@ -16,4 +16,5 @@ metadata:
   ports:
   - name: game-port
     port: {{ .Values.config.listenPort | int }}
+    targetPort: game-port
     protocol: UDP

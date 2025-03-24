@@ -68,13 +68,12 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
       volumes:
-      - name: app
+      - name: moria-app
         persistentVolumeClaim:
           claimName: "{{ .Chart.Name }}-app"
-      - name: config
+      - name: moria-config
         persistentVolumeClaim:
           claimName: "{{ .Chart.Name }}-config"
-      - name: data
+      - name: moria-data
         persistentVolumeClaim:
           claimName: "{{ .Chart.Name }}-data"
-      terminationGracePeriodSeconds: 90
