@@ -1,5 +1,5 @@
 apiVersion: v2
 name: moria-dedicated
 description: Return to Moria dedicated server
-version: 0.1.1
+version: 0.1.2
 home: https://github.com/xalimar/moria
