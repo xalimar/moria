@@ -9,12 +9,12 @@ metadata:
   {{- with .Values.service.annotations }}
   annotations: {{- toYaml . | nindent 4 }}
   {{- end }}
-  spec:
-    type: {{ .Values.service.type }}
-    selector:
-      app: "{{ .Chart.Name }}"
-    ports:
-    - name: game-port
-      port: {{ .Values.config.listenPort | int }}
-      targetPort: game-port
-      protocol: UDP
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: "{{ .Chart.Name }}"
+  ports:
+  - name: game-port
+    port: {{ .Values.config.listenPort | int }}
+    targetPort: game-port
+    protocol: UDP
