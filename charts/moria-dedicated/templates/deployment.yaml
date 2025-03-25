@@ -54,11 +54,10 @@ spec:
         - name: game-port
           containerPort: {{ .Values.config.listenPort | int }}
           protocol: UDP
-      #   volumeMounts:
-      #   - name: moria-app
-      #     mountPath: /app/moria
-      #     subpath: data
-      # volumes:
-      # - name: moria-app
-      #   persistentVolumeClaim:
-      #     claimName: "{{ .Chart.Name }}-app"
+        volumeMounts:
+        - name: moria-app
+          mountPath: /app/moria
+      volumes:
+      - name: moria-app
+        persistentVolumeClaim:
+          claimName: "{{ .Chart.Name }}-app"
