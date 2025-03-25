@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.licenses="MIT"
 ENV APP_ID=3349480
 ENV APP_NAME=moria
 ENV APP_DIR="/app/moria"
-ENV CONFIG_DIR="/config/moria"
-ENV DATA_DIR="/data/moria"
+# ENV CONFIG_DIR="/config/moria"
+# ENV DATA_DIR="/data/moria"
 ENV UPDATE_ON_START=true
 ENV RESET_SEED=false
 ENV STEAM_USERNAME=anonymous
@@ -41,14 +41,15 @@ RUN apt-get install gettext-base \
     && apt-get clean
 USER steam
 
+
+# RUN mkdir -p "$APP_DIR" "$CONFIG_DIR" "$DATA_DIR" \
+RUN mkdir -p "$APP_DIR" \
+&& steamcmd +login anonymous +quit \
+&& xvfb-run winetricks -q vcrun2022
+
+# VOLUME [ "$APP_DIR", "$CONFIG_DIR", "$DATA_DIR" ]
+
 COPY ./MoriaServerConfig.ini.tmpl /MoriaServerConfig.ini.tmpl
-
-RUN mkdir -p "$APP_DIR" "$CONFIG_DIR" "$DATA_DIR" \
-    && steamcmd +login anonymous +quit \
-    && xvfb-run winetricks -q vcrun2022
-
-VOLUME [ "$APP_DIR", "$CONFIG_DIR", "$DATA_DIR" ]
-
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]

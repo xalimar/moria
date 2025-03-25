@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 echo "Starting Steam installation"
-ls -la /data
-ls -la /config
 ls -la /app
 ls -la $APP_DIR
 ls -la $CONFIG_DIR
@@ -21,15 +19,9 @@ if [[ "$RESET_SEED" == "true" ]]; then
 fi
 
 SETTINGS_FILE="$APP_DIR/MoriaServerConfig.ini"
-envsubst < /MoriaServerConfig.ini.tmpl > "$CONFIG_DIR/MoriaServerConfig.ini"
-ln -sf "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
-
-SAVE_DIR="$APP_DIR/Moria"
-if [[ -d $SAVE_DIR && ! -L $SAVE_DIR ]]; then
-    echo "Moving existing save to $DATA_DIR"
-    mv "$APP_DIR/Moria" "$DATA_DIR"
-fi
-ln -sf "$DATA_DIR" $SAVE_DIR
+envsubst < /MoriaServerConfig.ini.tmpl > "$SETTINGS_FILE"
+# envsubst < /MoriaServerConfig.ini.tmpl > "$CONFIG_DIR/MoriaServerConfig.ini"
+# ln -sf "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
 
 echo "Starting fake screen"
 rm -f /tmp/.X0-lock 2>&1

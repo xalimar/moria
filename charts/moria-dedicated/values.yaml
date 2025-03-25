@@ -29,9 +29,5 @@ service:
 
 volumes:
   appPVC:
-    size: 2Gi
-  configPVC:
-    size: 10Mi
-  dataPVC:
     size: 20Gi
   storageClassName: ""

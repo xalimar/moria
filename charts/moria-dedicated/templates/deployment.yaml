@@ -58,19 +58,7 @@ spec:
       #   - name: moria-app
       #     mountPath: /app/moria
       #     subpath: data
-      #   - name: moria-config
-      #     mountPath: /config/moria
-      #     subpath: data
-      #   - name: moria-data
-      #     mountPath: /data/moria
-      #     subpath: data
       # volumes:
       # - name: moria-app
       #   persistentVolumeClaim:
       #     claimName: "{{ .Chart.Name }}-app"
-      # - name: moria-config
-      #   persistentVolumeClaim:
-      #     claimName: "{{ .Chart.Name }}-config"
-      # - name: moria-data
-      #   persistentVolumeClaim:
-      #     claimName: "{{ .Chart.Name }}-data"
