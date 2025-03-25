@@ -1,5 +1,14 @@
 #!/bin/bash
 set -e
+echo "Starting Steam installation"
+ls -la /data
+ls -la /config
+ls -la /app
+ls -la $APP_DIR
+ls -la $CONFIG_DIR
+whoami
+id
+sleep 60
 
 if [[ "$UPDATE_ON_START" == "true" || ! -d "$APP_DIR/Moria/Binaries" ]]; then
     steamcmd +force_install_dir "$APP_DIR" +@sSteamCmdForcePlatformType windows \
