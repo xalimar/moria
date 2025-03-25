@@ -12,9 +12,5 @@ services:
       - 7777:7777/udp
     volumes:
       - moria-app:/app/moria # game server files
-      - moria-config:/config/moria # moria config files
-      - moria-data:/data/moria # game/world save
 volumes:
   moria-app:
-  moria-config:
-  moria-data:

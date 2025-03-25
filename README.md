@@ -54,7 +54,7 @@ These variables modify some of the game configuration options and storage locati
 ```bash
 podman run --name moria \
     -p 7777:7777/udp \
-    -v ./moria:/data/moria \
+    -v ./moria:/app/moria \
     --restart unless-stopped \
     ghcr.io/bubylou/moria:latest
 ```
@@ -75,10 +75,6 @@ services:
       - 7777:7777/udp
     volumes:
       - moria-app:/app/moria # game server files
-      - moria-config:/config/moria # moria config files
-      - moria-data:/data/moria # game/world save
 volumes:
   moria-app:
-  moria-config:
-  moria-data:
 ```

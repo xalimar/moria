@@ -1,13 +1,7 @@
 #!/bin/bash
 set -e
-echo "Starting Steam installation"
-ls -la /app
-ls -la $APP_DIR
-ls -la $CONFIG_DIR
-whoami
-id
-sleep 60
 
+echo "Starting Steam installation"
 if [[ "$UPDATE_ON_START" == "true" || ! -d "$APP_DIR/Moria/Binaries" ]]; then
     steamcmd +force_install_dir "$APP_DIR" +@sSteamCmdForcePlatformType windows \
         +login "$STEAM_USERNAME" "$STEAM_PASSWORD" "$STEAM_GUARD" \
@@ -15,13 +9,13 @@ if [[ "$UPDATE_ON_START" == "true" || ! -d "$APP_DIR/Moria/Binaries" ]]; then
 fi
 
 if [[ "$RESET_SEED" == "true" ]]; then
+    echo "Resetting Invite Seed"
     rm -f "$APP_DIR/Moria/Saved/Config/InviteSeed.cfg"
 fi
 
+echo "Preparing settings file"
 SETTINGS_FILE="$APP_DIR/MoriaServerConfig.ini"
 envsubst < /MoriaServerConfig.ini.tmpl > "$SETTINGS_FILE"
-# envsubst < /MoriaServerConfig.ini.tmpl > "$CONFIG_DIR/MoriaServerConfig.ini"
-# ln -sf "$CONFIG_DIR/MoriaServerConfig.ini" $SETTINGS_FILE
 
 echo "Starting fake screen"
 rm -f /tmp/.X0-lock 2>&1
