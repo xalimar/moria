@@ -21,9 +21,9 @@ spec:
         release: "{{ .Release.Name }}"
     spec:
       securityContext:
-        runAsUser: 10000
-        runAsGroup: 10000
-        fsGroup: 10000
+        runAsUser: 1000
+        runAsGroup: 100
+        fsGroup: 100
       containers:
       - name: "{{ .Chart.Name }}"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
