@@ -20,10 +20,6 @@ spec:
         app: "{{ .Chart.Name }}"
         release: "{{ .Release.Name }}"
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 100
-        fsGroup: 100
       containers:
       - name: "{{ .Chart.Name }}"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -65,8 +61,6 @@ spec:
           mountPath: /config/moria
         - name: moria-data
           mountPath: /data/moria
-        securityContext:
-          allowPrivilegeEscalation: false
       volumes:
       - name: moria-app
         persistentVolumeClaim:
