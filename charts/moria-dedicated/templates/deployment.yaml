@@ -57,10 +57,13 @@ spec:
         volumeMounts:
         - name: moria-app
           mountPath: /app/moria
+          subpath: data
         - name: moria-config
           mountPath: /config/moria
+          subpath: data
         - name: moria-data
           mountPath: /data/moria
+          subpath: data
       volumes:
       - name: moria-app
         persistentVolumeClaim:
